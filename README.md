@@ -4,7 +4,6 @@
 
 ## Theme-_Life in a pandemic_
 
-## Team Name- _Hackstreet Boys_
 
 ## Project Description
 During the lockdown, it was not feasible for people to go to doctor and consult them. There were lockdowns in several places and people were not feeling safe to go out. In this project ,we provide a platform in which people can find doctors not only in their nearby areas but also from far places. They can shcedule their appointment and can get medication.
@@ -23,3 +22,5 @@ During the lockdown, it was not feasible for people to go to doctor and consult 
 - Feedback for doctors.
 - Forum for users to clear medical queries.
 ```
+
+## Team Name- _Hackstreet Boys_
