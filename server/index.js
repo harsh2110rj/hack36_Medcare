@@ -3,6 +3,7 @@ const mysql = require('mysql');
 const bodyParser = require('body-parser')
 const cors = require('cors');
 const app = express();
+const nodemailer = require("nodemailer");
 const bcrypt = require("bcrypt");
 const port = 3001;
 const jwt = require("jsonwebtoken");
@@ -70,7 +71,18 @@ app.post('/user/patient', (req, res) => {
         res.send(result);
     })
 })
-
+app.post('/show/doctor/category',(req,res)=>{
+    const category=req.body.category;
+    const sqlSelect = "SELECT * FROM doctor_details WHERE category=?;"
+    db.query(sqlSelect, category, (err, result) => {const arr=[];
+    for(let i=0;i<result.length;i++)
+    {
+        arr.push(result[i].name);
+    }
+    // console.log(arr);
+        res.send(arr);
+    })
+})
 
 app.post('/login/doctor', (req, res) => {
 
@@ -154,8 +166,6 @@ app.post('/register/doctor', (req, res) => {
 
         });
     })
-
-
 });
 app.post('/register/patient', (req, res) => {
 
@@ -179,6 +189,127 @@ app.post('/patientList', (req, res) => {
     })
 });
 
+app.post('/book/confirm',(req, res)=>{
+    const doctor=req.body.doctor;
+    const patient=req.body.patient;
+    const date=req.body.date;
+    const slot=req.body.slot;
+    const mobile=req.body.mobile;
+    const email=req.body.email;
+    const reason=req.body.reason;
+    
+    const sqlInsert="INSERT INTO  appointment_details (doctor,patient,date,slot,mobile,email,reason) VALUES (?,?,?,?,?,?,?);"
+    db.query(sqlInsert,[doctor,patient,date,slot,mobile,email,reason], (err, result) =>{
+    })
+})
+app.post('/book',(req, res)=>{
+    const doctor=req.body.doctor;
+    const date=req.body.date;
+    const sqlSelect="SELECT slot from appointment_details where doctor=? and date=?;"
+    db.query(sqlSelect,[doctor,date], (err, result) =>{
+        const temp=[];
+        for(let i=0;i<result.length;i++)
+        {
+            temp.push(result[i].slot);
+        }
+        res.send(temp);
+    })
+})
+app.post('/booked',(req, res)=>{
+    const doctor=req.body.doctor;
+    const date=req.body.date;
+    const sqlSelect="SELECT slot from confirmed_appointment where doctor=? and date=?;"
+    db.query(sqlSelect,[doctor,date], (err, result) =>{
+        const temp=[];
+        for(let i=0;i<result.length;i++)
+        {
+            temp.push(result[i].slot);
+        }
+        res.send(temp);
+    })
+})
+app.post('/getBookings',(req,res)=>{
+    const doctor=req.body.doctor;
+    // console.log(doctor);
+    const sqlSelect="SELECT patient,reason,date,slot,mobile,email FROM appointment_details where doctor=?;"
+    db.query(sqlSelect,doctor,(err,result)=>{
+        // console.log(result);
+        res.send(result);
+    })
+})
+app.post('/deleteBooking',(req,res)=>{
+    const slot=req.body.slot;
+    const patient=req.body.patient;
+    const date=req.body.date;
+    const doctor=req.body.doctor;
+    const sqlDelete="DELETE FROM appointment_details where doctor=? and patient=? and date=? and slot=?;"
+    db.query(sqlDelete,[doctor,patient,date,slot],(err,result)=>{
+console.log(result);
+    })
+
+})
+
+app.post('/confirm',(req,res)=>{
+const email=req.body.email;
+    const output=` 
+    <p> Your appointment with ${req.body.doctor} has been confirmed and the your appointment details are as follows:</p>
+    <ul>
+    <li> Patient Name : ${req.body.patient} </li>
+    <li> Date of Appointment : ${req.body.date} </li>
+    <li> Slot : ${req.body.slot} </li>
+    </ul>
+    `;
+    let transporter = nodemailer.createTransport({
+        host: "smtp.gmail.com",
+        port: 587,
+        secure: false, // true for 465, false for other ports
+        auth: {
+          user: "healthmedcare0@gmail.com" , // generated ethereal user
+          pass: "medcare@123", // generated ethereal password
+        },
+        tls:{
+            rejectUnauthorized: false
+        }
+      });
+    
+      // send mail with defined transport object
+      let info={
+        from: '"MedCare" <healthmedcare0@gmail.com>', // sender address
+        to: email, // list of receivers
+        subject: "Appointment Confirmed", // Subject line
+        text: "Hello world?", // plain text body
+        html: output, // html body
+      };
+      transporter.sendMail(info, function (error, response) {
+        if (error) {
+            console.log(error);
+        }
+        else {
+            console.log("mail sent");
+        }
+    });
+      console.log("Message sent: %s", info.messageId);
+      // Message sent: <b658f8ca-6296-ccf4-8306-87d57a0b4321@example.com>
+    
+      // Preview only available when sending through an Ethereal account
+      console.log("Preview URL: %s", nodemailer.getTestMessageUrl(info));
+      // Preview URL: https://ethereal.email/message/WaQKMgKddxQDoou...
+})
+
+app.post('/confirmedBooking',(req,res)=>{
+    const doctor=req.body.doctor;
+    const patient=req.body.patient;
+    const date=req.body.date;
+    const slot=req.body.slot;
+    const mobile=req.body.mobile;
+    console.log('why');
+    // const email=req.body.email;
+    // const reason=req.body.reason;
+    
+    const sqlInsert="INSERT INTO  confirmed_appointment (doctor,patient,date,slot,mobile) VALUES (?,?,?,?,?);"
+    db.query(sqlInsert,[doctor,patient,date,slot,mobile], (err, result) =>{
+    })
+})
 app.listen(port, () => {
     console.log('Server running...');
 });
