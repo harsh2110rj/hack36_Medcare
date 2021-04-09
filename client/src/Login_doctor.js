@@ -42,8 +42,10 @@ console.log(data1);
                         {setLoginStatus(false);  alert('Invalid details');}
                     else
                     {
-                       
+                        const id=resp.data.id;
+                       console.log(id);
                         setLoginStatus(true);
+                        localStorage.setItem("id",id);
                         localStorage.setItem("token",resp.data.token);
                         localStorage.setItem("user",email);
                         userAuthenticated();
