@@ -1,25 +1,36 @@
-import logo from './logo.svg';
-import './App.css';
+
+import { Route, Switch } from 'react-router-dom'
+import React from 'react'
+import Nav from './Nav'
+import Login_doctor from './Login_doctor'
+import Register_doctor from './Register_doctor'
+import Login_patient from './Login_patient'
+import Register_patient from './Register_patient'
+import Doctor_dashboard from './Doctor_dashboard'
+import Patient_dashboard from './Patient_dashboard'
+import Logout from './Logout'
+import Home from './Home'
 
 function App() {
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <Nav />
+      <Switch>
+        <Route exact path='/'><Home /></Route>
+        <Route path="/login_doctor"><Login_doctor /></Route>
+        <Route path="/register_doctor"><Register_doctor /></Route>
+        <Route path="/login_patient"><Login_patient /></Route>
+        <Route path="/register_patient"><Register_patient /></Route>
+        <Route path="/doctor_dashboard"><Doctor_dashboard /></Route>
+        <Route path="/patient_dashboard"><Patient_dashboard /></Route>
+        <Route path="/logout"><Logout /></Route>
+
+      </Switch>
+
     </div>
-  );
+
+  )
 }
 
 export default App;
