@@ -11,6 +11,8 @@ import Typography from '@material-ui/core/Typography';
 import Box from '@material-ui/core/Box';
 import Doc_upcoming from './components/Doc_upcoming';
 import Doc_past from './components/Doc_past';
+import VideoCall from './VideoCall';
+import { ContextProvider } from './Context';
 
 
 function TabPanel(props) {
@@ -106,7 +108,9 @@ function Doctor_dashboard() {
                 Requests
 </TabPanel>
             <TabPanel value={value} index={4}>
-                Video Call
+            <ContextProvider>
+            <VideoCall />
+          </ContextProvider>
 </TabPanel>
         </div>
     )
