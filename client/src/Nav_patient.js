@@ -7,7 +7,7 @@ function Nav_patient(props)
         <div>
             <nav className="navbar navbar-expand-lg navbar-light fixed-top">
         <div className="container">
-          <Link className="navbar-brand" to='/patient_dashboard'>Dashboard</Link>
+          <Link className="navbar-brand" to='/patient_dashboard'>Patient's Dashboard</Link>
           <div className="collapse navbar-collapse" id="navbarTogglerDemo02">
             <ul className="navbar-nav ml-auto">
             <li className="nav-item">
