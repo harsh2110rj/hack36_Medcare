@@ -24,10 +24,11 @@ const Doc_upcoming = (props) => {
 
     useEffect(() => {
         setId(props.id);
+      //  console.log("id in upcoming",props.id);
         Axios.post('http://localhost:3001/patientList/', {
-            id: id
+            id: props.id
         }).then((res) => {
-            console.log(res);
+           // console.log(res.data);
             setPatients(res.data);
         })
 
@@ -38,7 +39,7 @@ const Doc_upcoming = (props) => {
         <div>
             
             <TableContainer component={Paper}>
-                <Table className={classes.table} aria-label="simple table">
+            <Table className={classes.table} aria-label="simple table">
                     <TableHead>
                         <TableRow>
 
@@ -47,17 +48,19 @@ const Doc_upcoming = (props) => {
                             <TableCell align="center">Date</TableCell>
                             <TableCell align="center">Status</TableCell>
                             <TableCell align="center">Reason</TableCell>
+                            <TableCell align="center">Mobile</TableCell>
 
                         </TableRow>
                     </TableHead>
                     <TableBody>
                         {patients.map((row) => (
                             <TableRow key={row.ID}>
-                                <TableCell align="center">{row.name}</TableCell>
-                                <TableCell align="center">{row.time}</TableCell>
+                                <TableCell align="center">{row.patient}</TableCell>
+                                <TableCell align="center">{row.slot}</TableCell>
                                 <TableCell align="center">{row.date}</TableCell>
                                 <TableCell align="center">{row.status}</TableCell>
                                 <TableCell align="center">{row.reason}</TableCell>
+                                <TableCell align="center">{row.mobile}</TableCell>
 
                             </TableRow>
                         ))}

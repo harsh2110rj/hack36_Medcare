@@ -25,7 +25,7 @@ const Doc_past = (props) => {
     useEffect(() => {
         setId(props.id);
         Axios.post('http://localhost:3001/patientList/', {
-            id: id
+            id: props.id
         }).then((res) => {
             setPatients(res.data);
         })
@@ -45,17 +45,19 @@ const Doc_past = (props) => {
                             <TableCell align="center">Date</TableCell>
                             <TableCell align="center">Status</TableCell>
                             <TableCell align="center">Reason</TableCell>
+                            <TableCell align="center">Mobile</TableCell>
 
                         </TableRow>
                     </TableHead>
                     <TableBody>
                         {patients.map((row) => (
                             <TableRow key={row.ID}>
-                                <TableCell align="center">{row.name}</TableCell>
-                                <TableCell align="center">{row.time}</TableCell>
+                                <TableCell align="center">{row.patient}</TableCell>
+                                <TableCell align="center">{row.slot}</TableCell>
                                 <TableCell align="center">{row.date}</TableCell>
                                 <TableCell align="center">{row.status}</TableCell>
                                 <TableCell align="center">{row.reason}</TableCell>
+                                <TableCell align="center">{row.mobile}</TableCell>
 
                             </TableRow>
                         ))}
