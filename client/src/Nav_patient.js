@@ -13,7 +13,9 @@ function Nav_patient(props)
             <li className="nav-item">
                 <span className="nav-link">{props.name}</span>  
               </li>
-          
+              <li className="nav-item">
+                <Link className="nav-link" to='/patient/book' >Book</Link>
+              </li>
               <li className="nav-item">
                 <Link className="nav-link" to='/logout' >Logout</Link>
               </li>

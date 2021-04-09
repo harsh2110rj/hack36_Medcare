@@ -10,7 +10,8 @@ import Doctor_dashboard from './Doctor_dashboard'
 import Patient_dashboard from './Patient_dashboard'
 import Logout from './Logout'
 import Home from './Home'
-
+import Book from './Book'
+import Pending_Appointments from './Pending_Appointments'
 function App() {
 
   return (
@@ -25,6 +26,8 @@ function App() {
         <Route path="/doctor_dashboard"><Doctor_dashboard /></Route>
         <Route path="/patient_dashboard"><Patient_dashboard /></Route>
         <Route path="/logout"><Logout /></Route>
+        <Route path="/patient/book"><Book /></Route>
+        <Route path="/doctor/pending_appointments"><Pending_Appointments/></Route>
 
       </Switch>
 

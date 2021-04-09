@@ -1,0 +1,61 @@
+.card-body {
+    padding:1rem;
+}
+.card-columns .card{
+    width:80%;
+}
+#abc{
+    margin:15px;
+    align-self: center;
+}
+#a{
+    text-align: center;
+}
+#b{
+    text-align: center;
+}
+#c{
+    text-align: center;
+}
+#d{
+    text-align: center;
+}
+#e{
+    text-align: center;
+}
+#f{
+    text-align: center;
+}
+#g{
+    text-align: center;
+}
+#h{
+    text-align: center;
+}
+#btna{
+    text-align: center;
+}
+#btnb{
+    text-align: center;
+}
+#btnc{
+    text-align: center;
+}
+#btnd{
+    text-align: center;
+}
+#btne{
+    text-align: center;
+}
+#btnf{
+    text-align: center;
+}
+#btng{
+    text-align: center;
+}
+#btng{
+    text-align: center;
+}
+#btnh{
+    text-align: center;
+}
