@@ -9,6 +9,9 @@ const port = 3001;
 const jwt = require("jsonwebtoken");
 const session = require("express-session");
 const cookieParser = require("cookie-parser");
+const Razorpay = require('razorpay')
+const shortid = require('shortid')
+
 
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.json());
@@ -345,8 +348,121 @@ io.on("connection",(socket)=>{
 });
 
 
+//forum code starts
+
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use(cors());
+app.use(express.json());
+app.post("/api/update", (req, res) => {
+
+    const discussion_id = req.body.discussion_id;
+    const discussion_detail = req.body.discussion_detail;
+
+    const sqlUpdate = "UPDATE comments SET discussion_detail = ? WHERE discussion_id = ? ;";
+    db.query(sqlUpdate, [discussion_detail, discussion_id], (err, result) => {
+        res.send("Hello");
+        console.log("update ho gaya");
+    })
+
+})
+app.post("/api/insert", (req, res) => {
+
+    const discussion_id = req.body.discussion_id;
+    const discussion_detail = req.body.discussion_detail;
+
+    const sqlInsert = "INSERT INTO comments (discussion_id, discussion_detail) VALUES (?,?);";
+    db.query(sqlInsert, [discussion_id, discussion_detail], (err, result) => {
+        res.send("Hello");
+        console.log("Inside insert: id is = " + discussion_id);
+    })
+})
+
+app.get("/api/get/:id", (req, res) => {
+
+    const discussion_id = req.params.id;
+    const sqlSelect = "SELECT discussion_detail FROM comments WHERE discussion_id = ?;";
+    // console.log("id in sqlSelect = "+discussion_id);
+    db.query(sqlSelect, discussion_id, (err, result) => {
+        res.send(result);
+        // console.log("Inside api/get");
+        // console.log(result);
+    })
+})
+app.get("/api/get", (req, res) => {
 
 
+    const sqlSelect = "SELECT * FROM comments;";
+    // console.log("id in sqlSelect = "+discussion_id);
+    db.query(sqlSelect, (err, result) => {
+        res.send(result);
+        // console.log("Inside api/get/threads");
+        // console.log(result);
+    })
+})
+//forum code ends
+
+//payment code starts
+app.use(cors())
+app.use(bodyParser.json())
+
+const razorpay = new Razorpay({
+    key_id: "rzp_test_ajDpqGNzQ4hAml",
+    key_secret: "aNLAATtF4gt7xw4fJkygTVgv"
+})
+
+app.get('/logo.svg', (req, res) => {
+    res.sendFile(path.join(__dirname, 'logo.svg'))
+})
+
+app.post('/verification', (req, res) => {
+    // do a validation
+    const secret = '12345678'
+
+    console.log(req.body)
+
+    const crypto = require('crypto')
+
+    const shasum = crypto.createHmac('sha256', secret)
+    shasum.update(JSON.stringify(req.body))
+    const digest = shasum.digest('hex')
+
+    console.log(digest, req.headers['x-razorpay-signature'])
+
+    if (digest === req.headers['x-razorpay-signature']) {
+        console.log('request is legit')
+        // process it
+        require('fs').writeFileSync('payment1.json', JSON.stringify(req.body, null, 4))
+    } else {
+        // pass it
+    }
+    res.json({ status: 'ok' })
+})
+
+app.post('/razorpay', async (req, res) => {
+    const payment_capture = 1
+    const amount = 499
+    const currency = 'INR'
+
+    const options = {
+        amount: amount * 100,
+        currency,
+        receipt: shortid.generate(),
+        payment_capture
+    }
+
+    try {
+        const response = await razorpay.orders.create(options)
+        console.log(response)
+        res.json({
+            id: response.id,
+            currency: response.currency,
+            amount: response.amount
+        })
+    } catch (error) {
+        console.log(error)
+    }
+})
+//payment code ends
 
 server.listen(port, () => {
     console.log('Server running...');

@@ -16,6 +16,9 @@ function Nav_doctor(props)
               <li className="nav-item">
                 <Link className="nav-link" to='/doctor/pending_appointments' >Pending Appointments</Link>
               </li>
+              <li>
+                  <Link className="nav-link" to="/ShowForum">Show Forum</Link>
+              </li>
     
               <li className="nav-item">
                 <Link className="nav-link" to='/logout' >Logout</Link>

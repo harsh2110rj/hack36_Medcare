@@ -10,6 +10,9 @@ import Doctor_dashboard from './Doctor_dashboard'
 import Patient_dashboard from './Patient_dashboard'
 import Logout from './Logout'
 import Home from './Home'
+import ShowThread from './ShowThread';
+import { ShowThreadWithId } from './ShowForum';
+import ShowForum from './ShowForum'
 import Book from './Book'
 import Pending_Appointments from './Pending_Appointments'
 import VideoCall from './VideoCall'
@@ -30,6 +33,8 @@ function App() {
         <Route path="/doctor_dashboard"><Doctor_dashboard /></Route>
         <Route path="/patient_dashboard"><Patient_dashboard /></Route>
         <Route path="/logout"><Logout /></Route>
+        <Route exact path="/ShowForum" component={ShowForum} />
+        <Route exact path="/ShowThread" component={ShowThreadWithId} />
         <Route path="/patient/book"><Book /></Route>
         <Route path="/doctor/pending_appointments"><Pending_Appointments /></Route>
         <Route path="/videoCall">

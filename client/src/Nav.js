@@ -22,6 +22,7 @@ function Nav(props)
                 :<Link className="nav-link" to='/login_patient'>Login</Link>}
               </li>
             </ul>
+              <Link className="nav-link" to="/ShowForum">Show Forum</Link>
           </div>
         </div>
       </nav>
