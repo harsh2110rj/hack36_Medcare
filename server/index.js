@@ -139,7 +139,7 @@ app.post('/login/patient', (req, res) => {
                         })
 
                         // res.send(result);
-                        res.json({ auth: true, token: token, result: result });
+                        res.json({ auth: true, token: token, result: result,id:id });
                     } else {
                         res.json({ auth: false, message: "Wrong username/password" })
                     }
