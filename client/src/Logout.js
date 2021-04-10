@@ -10,6 +10,8 @@ function Logout(){
         localStorage.removeItem('token');
         localStorage.removeItem('type');
         localStorage.removeItem('user');
+        localStorage.removeItem('id');
+        // localStorage.removeItem('type');
         history.push('/');
     },[]);
     return(

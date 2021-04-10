@@ -13,11 +13,12 @@ import Doc_upcoming from './components/Doc_upcoming';
 import Doc_past from './components/Doc_past';
 import VideoCall from './VideoCall';
 import { ContextProvider } from './Context';
+import { Button, Card } from 'react-bootstrap';
 
 
 function TabPanel(props) {
     const { children, value, index, ...other } = props;
-
+// console.log(localStorage.getItem('id'));
     return (
         <div
             role="tabpanel"
@@ -108,9 +109,9 @@ function Doctor_dashboard() {
                 Requests
 </TabPanel>
             <TabPanel value={value} index={4}>
-            <ContextProvider>
-            <VideoCall />
-          </ContextProvider>
+            <Link to='/videoCall' ><Button>
+                            Video Call
+                        </Button></Link>
 </TabPanel>
         </div>
     )

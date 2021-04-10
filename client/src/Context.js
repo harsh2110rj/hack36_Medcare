@@ -30,6 +30,7 @@ const ContextProvider = ({ children }) => {
     socket.on('me', (id) => {
       console.log(id);
       setMe(id);
+      console.log("meeee ",id);
     });
 
     socket.on('callUser', ({ from, name: callerName, signal }) => {

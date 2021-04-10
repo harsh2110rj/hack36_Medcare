@@ -95,7 +95,7 @@ const history=useHistory();
   let today = date.split(' ')[1] + ' ' + date.split(' ')[2] + ' ' + date.split(' ')[3];
   let tomorrow = tom_date.split(' ')[1] + ' ' + tom_date.split(' ')[2] + ' ' + tom_date.split(' ')[3];
   let day_after_tomorrow = day_after_tom.split(' ')[1] + ' ' + day_after_tom.split(' ')[2] + ' ' + day_after_tom.split(' ')[3];
-
+  const pid=localStorage.getItem('id');
 
   const [modal, setModal] = useState(false);
   const [name, setName] = useState("");
@@ -110,17 +110,18 @@ const history=useHistory();
 
 
   function handleSubmit(e) {
-    
+   let pat_id=parseInt(pid);
     if(!email || !mobile || !reason || slot==="Choose" || book_Date==="Choose")
     {alert('Fill all the details CORRECTLY..')}
     else{
       displayRazorpay();
 
        let data={
-         patient:patient_name, email:email , reason:reason , slot:slot, date:book_Date, mobile:mobile , doctor:props.doctor
+         patient:patient_name, email:email , reason:reason , slot:slot, date:book_Date, mobile:mobile , doctor:props.doctor, doc_id:props.id, pat_id: pat_id
        }
 
-       Axios.post('http://localhost:3001/book/confirm',data).then((resp)=>{                                     
+       Axios.post('http://localhost:3001/book/confirm',data).then((resp)=>{  
+         console.log(resp);                                   
       });
 setBookDate("Choose");
 setEmail("");

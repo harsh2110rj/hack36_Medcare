@@ -67,10 +67,10 @@ app.post('/user/doctor', (req, res) => {
 })
 app.post('/user/patient', (req, res) => {
     const email = req.body.email;
-
+console.log(email);
     const sqlSelect = "SELECT * FROM patient_details WHERE email=?;"
     db.query(sqlSelect, email, (err, result) => {
-
+      console.log(result);
         res.send(result);
     })
 })
@@ -96,14 +96,11 @@ app.post('/user/patient/confirmed', (req, res) => {
 })
 app.post('/show/doctor/category',(req,res)=>{
     const category=req.body.category;
-    const sqlSelect = "SELECT * FROM doctor_details WHERE category=?;"
-    db.query(sqlSelect, category, (err, result) => {const arr=[];
-    for(let i=0;i<result.length;i++)
-    {
-        arr.push(result[i].name);
-    }
-    // console.log(arr);
-        res.send(arr);
+    const sqlSelect = "SELECT name,id FROM doctor_details WHERE category=?;"
+    db.query(sqlSelect, category, (err, result) => {
+   
+    console.log(result);
+        res.send(result);
     })
 })
 
@@ -206,7 +203,7 @@ app.post('/register/patient', (req, res) => {
 
 });
 app.post('/patientList', (req, res) => {
-    const query = "SELECT * from appointment_details WHERE doc_id=?";
+    const query = "SELECT * from confirmed_appointment WHERE doc_id=?";
     db.query(query, [req.body.id], (err, result) => {
         res.send(result);
     })
@@ -220,9 +217,12 @@ app.post('/book/confirm',(req, res)=>{
     const mobile=req.body.mobile;
     const email=req.body.email;
     const reason=req.body.reason;
-    
-    const sqlInsert="INSERT INTO  appointment_details (doctor,patient,date,slot,mobile,email,reason) VALUES (?,?,?,?,?,?,?);"
-    db.query(sqlInsert,[doctor,patient,date,slot,mobile,email,reason], (err, result) =>{
+    const doc_id=req.body.doc_id;
+    const pat_id=req.body.pat_id;
+    console.log(req.body);
+    const sqlInsert="INSERT INTO  appointment_details (doctor,patient,date,slot,mobile,email,reason,doc_id,pat_id) VALUES (?,?,?,?,?,?,?,?,?);"
+    db.query(sqlInsert,[doctor,patient,date,slot,mobile,email,reason,doc_id,pat_id], (err, result) =>{
+        console.log('success');
     })
 })
 app.post('/book',(req, res)=>{
@@ -252,10 +252,10 @@ app.post('/booked',(req, res)=>{
     })
 })
 app.post('/getBookings',(req,res)=>{
-    const doctor=req.body.doctor;
+    const doc_id=req.body.doc_id;
     // console.log(doctor);
-    const sqlSelect="SELECT patient,reason,date,slot,mobile,email FROM appointment_details where doctor=?;"
-    db.query(sqlSelect,doctor,(err,result)=>{
+    const sqlSelect="SELECT patient,reason,date,slot,mobile,email,doc_id,pat_id FROM appointment_details where doc_id=?;"
+    db.query(sqlSelect,doc_id,(err,result)=>{
         // console.log(result);
         res.send(result);
     })
@@ -264,9 +264,9 @@ app.post('/deleteBooking',(req,res)=>{
     const slot=req.body.slot;
     const patient=req.body.patient;
     const date=req.body.date;
-    const doctor=req.body.doctor;
-    const sqlDelete="DELETE FROM appointment_details where doctor=? and patient=? and date=? and slot=?;"
-    db.query(sqlDelete,[doctor,patient,date,slot],(err,result)=>{
+    const doc_id=req.body.doc_id;
+    const sqlDelete="DELETE FROM appointment_details where doc_id=?  and date=? and slot=?;"
+    db.query(sqlDelete,[doc_id,date,slot],(err,result)=>{
 console.log(result);
     })
 
@@ -325,17 +325,21 @@ app.post('/confirmedBooking',(req,res)=>{
     const date=req.body.date;
     const slot=req.body.slot;
     const mobile=req.body.mobile;
+    const doc_id=req.body.doc_id;
+    const pat_id=req.body.pat_id;
+    const reason=req.body.reason;
+    
     console.log('why');
     // const email=req.body.email;
     // const reason=req.body.reason;
     
-    const sqlInsert="INSERT INTO  confirmed_appointment (doctor,patient,date,slot,mobile) VALUES (?,?,?,?,?);"
-    db.query(sqlInsert,[doctor,patient,date,slot,mobile], (err, result) =>{
+    const sqlInsert="INSERT INTO  confirmed_appointment (doctor,patient,date,slot,mobile,doc_id,pat_id,reason) VALUES (?,?,?,?,?,?,?,?);"
+    db.query(sqlInsert,[doctor,patient,date,slot,mobile,doc_id,pat_id,reason], (err, result) =>{
     })
 })
 
 app.post('/appointmentList',(req,res)=>{
-    const query = "SELECT * from appointment_details WHERE pat_id=?";
+    const query = "SELECT * from confirmed_appointment WHERE pat_id=?";
     db.query(query, [req.body.id], (err, result) => {
         res.send(result);
     })
@@ -355,6 +359,7 @@ const io=require("socket.io")(server,{
 
 io.on("connection",(socket)=>{
     socket.emit("me",socket.id);
+    console.log("socket",socket.id);
     socket.on("disconnect",()=>{
         socket.broadcast.emit("callEnded")
     });
@@ -483,6 +488,23 @@ app.post('/razorpay', async (req, res) => {
     }
 })
 //payment code ends
+
+
+app.post('/confirmedList',(req,res)=>{
+    console.log("post confirmed appointment");
+    const query = "SELECT * from confirmed_appointment WHERE doc_id=?";
+    db.query(query, [req.body.id], (err, result) => {
+        res.send(result);
+    })
+})
+
+app.post('/updateLink',(req,res)=>{
+    const query="UPDATE confirmed_appointment SET link=(?) WHERE id=(?);";
+    db.query(query,[req.body.link,req.body.id],(err,result)=>{
+        if(!err)
+        console.log("Success");
+    })
+})
 
 server.listen(port, () => {
     console.log('Server running...');
