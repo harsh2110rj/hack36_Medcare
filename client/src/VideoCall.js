@@ -5,6 +5,8 @@ import VideoPlayer from './components/VideoPlayer';
 import Sidebar from './components/Sidebar';
 import Notifications from './components/Notifications';
 import Patients from './components/Patients';
+import Nav_doctor from './Nav_doctor';
+import Nav_patient from './Nav_patient';
 
 const useStyles = makeStyles((theme) => ({
   appBar: {
@@ -35,7 +37,12 @@ const useStyles = makeStyles((theme) => ({
 const VideoCall = () => {
   const classes = useStyles();
 
+  if(localStorage.getItem("type")=="doctor")
+  {
   return (
+    <div>
+      <Nav_doctor name="VideoCall" />
+     <br/><br/>
     <div className={classes.wrapper}>
       <AppBar className={classes.appBar} position="static" color="inherit">
         <Typography variant="h2" align="center">Virtual Consultation</Typography>
@@ -46,7 +53,28 @@ const VideoCall = () => {
       </Sidebar>
       <Patients />
     </div>
+    </div>
   );
+  }
+  else
+  {
+    return (
+      <div>
+        <Nav_patient name="VideoCall" />
+        <br/><br/>
+      <div className={classes.wrapper}>
+        <AppBar className={classes.appBar} position="static" color="inherit">
+          <Typography variant="h2" align="center">Virtual Consultation</Typography>
+        </AppBar>
+        <VideoPlayer />
+        <Sidebar>
+          <Notifications />
+        </Sidebar>
+        <Patients />
+      </div>
+      </div>
+    )
+  }
 };
 
 export default VideoCall;

@@ -45,6 +45,7 @@ console.log(data1);
                         const id=resp.data.id;
                        console.log(id);
                         setLoginStatus(true);
+                        localStorage.setItem("type","doctor");
                         localStorage.setItem("id",id);
                         localStorage.setItem("token",resp.data.token);
                         localStorage.setItem("user",email);
