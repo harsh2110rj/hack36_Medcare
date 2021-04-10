@@ -39,7 +39,10 @@ const Patients = () => {
             //  }).then()
         }
         }
+        const type=localStorage.getItem("type");
 
+        if(type=="doctor")
+        {
     return (
         <div>
             <TableContainer component={Paper}>
@@ -73,6 +76,15 @@ const Patients = () => {
     </TableContainer>  
         </div>
     )
+          }
+          else
+          {
+            return (
+              <div>
+                
+              </div>
+          )
+            }
 }
 
 export default Patients
