@@ -31,7 +31,7 @@ const Doc_upcoming = (props) => {
     useEffect(() => {
         setId(props.id);
       //  console.log("id in upcoming",props.id);
-        Axios.post('http://localhost:3001/patientList/', {
+        Axios.post('http://localhost:3001/confirmedList/', {
             id: props.id
         }).then((res) => {
             let temp=[];
@@ -99,8 +99,6 @@ const Doc_upcoming = (props) => {
                             <TableCell align="center">Patient</TableCell>
                             <TableCell align="center">Time</TableCell>
                             <TableCell align="center">Date</TableCell>
-                            <TableCell align="center">Status</TableCell>
-                            <TableCell align="center">Reason</TableCell>
                             <TableCell align="center">Mobile</TableCell>
 
                         </TableRow>
@@ -111,8 +109,6 @@ const Doc_upcoming = (props) => {
                                 <TableCell align="center">{row.patient}</TableCell>
                                 <TableCell align="center">{row.slot}</TableCell>
                                 <TableCell align="center">{row.date}</TableCell>
-                                <TableCell align="center">{row.status}</TableCell>
-                                <TableCell align="center">{row.reason}</TableCell>
                                 <TableCell align="center">{row.mobile}</TableCell>
 
                             </TableRow>

@@ -339,6 +339,7 @@ const io=require("socket.io")(server,{
 
 io.on("connection",(socket)=>{
     socket.emit("me",socket.id);
+    console.log("socket",socket.id);
     socket.on("disconnect",()=>{
         socket.broadcast.emit("callEnded")
     });
@@ -467,6 +468,23 @@ app.post('/razorpay', async (req, res) => {
     }
 })
 //payment code ends
+
+
+app.post('/confirmedList',(req,res)=>{
+    console.log("post confirmed appointment");
+    const query = "SELECT * from confirmed_appointment WHERE doc_id=?";
+    db.query(query, [req.body.id], (err, result) => {
+        res.send(result);
+    })
+})
+
+app.post('/updateLink',(req,res)=>{
+    const query="UPDATE confirmed_appointment SET link=(?) WHERE id=(?);";
+    db.query(query,[req.body.link,req.body.id],(err,result)=>{
+        if(!err)
+        console.log("Success");
+    })
+})
 
 server.listen(port, () => {
     console.log('Server running...');
