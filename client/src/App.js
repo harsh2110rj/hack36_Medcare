@@ -12,6 +12,10 @@ import Logout from './Logout'
 import Home from './Home'
 import Book from './Book'
 import Pending_Appointments from './Pending_Appointments'
+import VideoCall from './VideoCall'
+import { ContextProvider } from './Context';
+
+
 function App() {
 
   return (
@@ -27,7 +31,12 @@ function App() {
         <Route path="/patient_dashboard"><Patient_dashboard /></Route>
         <Route path="/logout"><Logout /></Route>
         <Route path="/patient/book"><Book /></Route>
-        <Route path="/doctor/pending_appointments"><Pending_Appointments/></Route>
+        <Route path="/doctor/pending_appointments"><Pending_Appointments /></Route>
+        <Route path="/videoCall">
+          <ContextProvider>
+            <VideoCall />
+          </ContextProvider>
+        </Route>
 
       </Switch>
 
