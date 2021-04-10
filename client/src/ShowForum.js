@@ -7,6 +7,8 @@ import ReactDOM from 'react-dom';
 import Question from './Question';
 import { render } from '@testing-library/react';
 import Axios from 'axios';
+import Nav_doctor from './Nav_doctor';
+import Nav_patient from './Nav_patient';
 
 var cur_id = 0;
 var indexOfSelectedThread = 0;
@@ -112,12 +114,10 @@ function ShowForum() {
 
     return (
         <>
-            <div class="ShowThreadtop-bar">
-                <h1>
-                    Discussion forum
-        </h1>
-            </div>
-            <div class="ShowThreadmain">
+        {localStorage.getItem("type")=="doctor"? <Nav_doctor name="Doctor" />:<Nav_patient name="Patient" />}
+        
+      <br/><br/><br/>
+            <div className="ShowThreadmain">
                 <ol>
                     {threadArr?.map(
                         (thread) => {

@@ -47,7 +47,7 @@ function Appointment(props) {
       currency: data.currency,
       amount: data.amount.toString(),
       order_id: data.id,
-      name: 'Donation',
+      name: 'Consultancy Fee',
       description: 'Thank you for nothing. Please give us some money',
       image: 'http://localhost:3001/logo.svg',
       handler: function (response) {

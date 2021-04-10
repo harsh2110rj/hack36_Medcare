@@ -15,14 +15,15 @@ function Home() {
     }
     return (
         <div>
-
+            <br/><br/>
             <div style={{ 'display': 'flex', 'margin': '50px' }}>
                 <Card style={{ width: '38rem', 'margin': 'auto' }}>
                     <Card.Img variant="top" src={doctor_image} />
                     <Card.Body>
                         <Card.Title>Doctors</Card.Title>
                         <Card.Text>
-                            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer convallis mi a metus tempus aliquam. In feugiat ex id interdum viverra. Mauris finibus dui sed.</Card.Text>
+                           World Class doctors available 24*7. Consult them without going a step outside your home.
+                           </Card.Text>
                         <Link to='/login_doctor' className='login'><Button variant="primary" onClick={Handle1}>
                             <h2>Doctor Login</h2>
                         </Button></Link>
@@ -33,7 +34,7 @@ function Home() {
                     <Card.Body>
                         <Card.Title>Patients</Card.Title>
                         <Card.Text>
-                            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer convallis mi a metus tempus aliquam. In feugiat ex id interdum viverra. Mauris finibus dui sed.</Card.Text>
+                           Don't panic in case you are not feeling. You can easily get checked by doctors right from your home.</Card.Text>
                         <Link to='/login_patient' className='login'><Button variant="primary" onClick={Handle2}>
                             <h2>Patient Login</h2>
                         </Button></Link>
