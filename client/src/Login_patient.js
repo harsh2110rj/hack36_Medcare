@@ -39,15 +39,15 @@ function Login_patient(){
             let data1 = { email: email, password: password };
 
                 Axios.post('http://localhost:3001/login/patient', data1).then((resp) => {
-                    // console.log(resp.data);
+                    console.log(resp.data.result);
                     if (!resp.data.auth)
                         {setLoginStatus(false);  alert('Invalid details');}
                     else
                     {
                        
                         setLoginStatus(true);
-                        const id=resp.data.id;
-                       // console.log("id in login pat",id);
+                        const id=resp.data.result[0].pid;
+                       console.log("id",id);
                         localStorage.setItem("id",id);
                         localStorage.setItem("token",resp.data.token);
                         localStorage.setItem("user",email);
