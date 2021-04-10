@@ -33,6 +33,9 @@ const did=localStorage.getItem('id');
       Axios.post('http://localhost:3001/deleteBooking',data).then((resp)=>{
 
       })
+      Axios.post('http://localhost:3001/cancel',data).then((resp)=>{
+
+      })
       let new_arr=arr.filter(function(obj){
         return (obj.patient!==temp['patient'] || obj.date!==temp['date'] || obj.slot!==temp['slot'])
       })
