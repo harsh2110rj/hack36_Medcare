@@ -22,7 +22,7 @@ const saltRounds = 10;
 const db = mysql.createPool({
     host: 'localhost',
     user: 'root',
-    password: '18July00@',
+    password: '',
     database: 'user',
 });
 
@@ -172,6 +172,57 @@ app.post('/register/patient', (req, res) => {
     })
 
 });
+
+
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use(cors());
+app.use(express.json());
+app.post("/api/update", (req, res) => {
+
+    const discussion_id = req.body.discussion_id;
+    const discussion_detail = req.body.discussion_detail;
+
+    const sqlUpdate = "UPDATE comments SET discussion_detail = ? WHERE discussion_id = ? ;";
+    db.query(sqlUpdate, [discussion_detail, discussion_id], (err, result) => {
+        res.send("Hello");
+        console.log("update ho gaya");
+    })
+
+})
+app.post("/api/insert", (req, res) => {
+
+    const discussion_id = req.body.discussion_id;
+    const discussion_detail = req.body.discussion_detail;
+
+    const sqlInsert = "INSERT INTO comments (discussion_id, discussion_detail) VALUES (?,?);";
+    db.query(sqlInsert, [discussion_id, discussion_detail], (err, result) => {
+        res.send("Hello");
+        console.log("Inside insert: id is = " + discussion_id);
+    })
+})
+
+app.get("/api/get/:id", (req, res) => {
+
+    const discussion_id = req.params.id;
+    const sqlSelect = "SELECT discussion_detail FROM comments WHERE discussion_id = ?;";
+    // console.log("id in sqlSelect = "+discussion_id);
+    db.query(sqlSelect, discussion_id, (err, result) => {
+        res.send(result);
+        // console.log("Inside api/get");
+        // console.log(result);
+    })
+})
+app.get("/api/get", (req, res) => {
+
+
+    const sqlSelect = "SELECT * FROM comments;";
+    // console.log("id in sqlSelect = "+discussion_id);
+    db.query(sqlSelect, (err, result) => {
+        res.send(result);
+        // console.log("Inside api/get/threads");
+        // console.log(result);
+    })
+})
 
 app.listen(port, () => {
     console.log('Server running...');

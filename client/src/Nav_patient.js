@@ -13,7 +13,7 @@ function Nav_patient(props)
             <li className="nav-item">
                 <span className="nav-link">{props.name}</span>  
               </li>
-          
+              <Link className="nav-link" to="/ShowForum">Show Forum</Link>
               <li className="nav-item">
                 <Link className="nav-link" to='/logout' >Logout</Link>
               </li>

@@ -13,10 +13,9 @@ function Nav_doctor(props)
             <li className="nav-item">
                 <span className="nav-link">{props.name}</span>
               </li>
-             
-    
-              <li className="nav-item">
-                <Link className="nav-link" to='/logout' >Logout</Link>
+             <Link className="nav-link" to="/ShowForum">Show Forum</Link>
+            <li className="nav-item">
+            <Link className="nav-link" to='/logout' >Logout</Link>
               </li>
               
 
