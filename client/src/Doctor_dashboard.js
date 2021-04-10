@@ -17,7 +17,7 @@ import { ContextProvider } from './Context';
 
 function TabPanel(props) {
     const { children, value, index, ...other } = props;
-
+// console.log(localStorage.getItem('id'));
     return (
         <div
             role="tabpanel"
