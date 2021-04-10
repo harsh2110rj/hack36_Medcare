@@ -18,18 +18,71 @@ const useStyles = makeStyles({
 
 
 const Doc_upcoming = (props) => {
+    const month={'Jan':0,'Feb':1,'Mar':2,'Apr':3,'Mar':4,'May':5,'Jun':6,'Jul':7,'Aug':8,'Sep':9,'Oct':10,'Nov':11,'Dec':12};
     const classes = useStyles();
     const [id, setId] = React.useState("");
     const [patients, setPatients] = React.useState([]);
-
+    var date = new Date();
+    let curr_time=date.getHours();
+    
+    // // console.log(tom_date);
+    date = date.toDateString();
+    let today = date.split(' ')[1] + ' ' + date.split(' ')[2] + ' ' + date.split(' ')[3];
     useEffect(() => {
         setId(props.id);
       //  console.log("id in upcoming",props.id);
         Axios.post('http://localhost:3001/confirmedList/', {
             id: props.id
         }).then((res) => {
-           // console.log(res.data);
-            setPatients(res.data);
+            let temp=[];
+            temp.push(res.data);
+            let add=[];
+           for(let i=0;i<temp.length;i++)
+           {
+               for(let j=0;j<temp[i].length;j++)
+               {
+                   let time;
+                   if(temp[i][j].slot[0]===':')
+                   time=temp[i][j].slot[0][0];
+                   else
+                   time=temp[i][j].slot[0]+temp[i][j].slot[0];
+                   
+                   if(today==temp[i][j].date)
+                   { 
+                       if(time<curr_time)
+                       {
+                           add.push(temp[i][j]);
+                       }
+                   }
+                   else{
+                       const dd=temp[i][j].date.split(' ')[1]; 
+                       const yyyy=temp[i][j].date.split(' ')[2]; 
+                       const mon=temp[i][j].date.split(' ')[0];
+                       console.log(dd);
+                       console.log(mon);
+                       console.log(yyyy);
+                       console.log(date.split(' ')[2]);
+                       console.log(date.split(' ')[1]);
+                       console.log(date.split(' ')[3]);
+                       console.log(month[date.split(' ')[1]]);
+                       console.log(month[mon]);
+                       if(yyyy>date.split(' ')[3]) 
+                       add.push(temp[i][j]);
+                     
+                       else if(yyyy===date.split(' ')[3] && month[mon]>month[date.split(' ')[1]]){
+                        add.push(temp[i][j]);
+                       }
+                       else if(month[mon]===month[date.split(' ')[1]] && dd>date.split(' ')[2])
+                       {
+                        add.push(temp[i][j]);   
+                       }
+
+                        
+                    }
+                }
+           }
+            setPatients(add);
+            console.log(add);
         })
 
     }, []);

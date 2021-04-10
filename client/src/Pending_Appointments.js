@@ -5,7 +5,7 @@ import Button from 'react-bootstrap/Button'
 import './pending.css'
 import Axios from 'axios'
 function Pending_Appointments(){
-
+const did=localStorage.getItem('id');
     const [doctor_name,setDoctor_name]=useState("");
     const [arr,setArr]=useState([]);
    useEffect(()=>{
@@ -15,8 +15,9 @@ function Pending_Appointments(){
                 // console.log(resp.data[0].name);
                 setDoctor_name(resp.data[0].name);
                 })
-                Axios.post('http://localhost:3001/getBookings',{doctor:doctor_name}).then((resp)=>{
-                  // console.log(resp.data);
+                let doc_id=parseInt(did);
+                Axios.post('http://localhost:3001/getBookings',{doc_id:doc_id}).then((resp)=>{
+                  console.log(resp.data);
                   setArr(resp.data);
           
               })
@@ -26,8 +27,9 @@ function Pending_Appointments(){
     function CancelHandler(data)
     {
       let temp=data;
+      let doc_id=parseInt(did);
       data['doctor']=doctor_name;
-      
+      data['doc_id']=doc_id;
       Axios.post('http://localhost:3001/deleteBooking',data).then((resp)=>{
 
       })
@@ -41,7 +43,9 @@ function Pending_Appointments(){
     }
     function ConfirmHandler(data){
       let temp=data;
+      let doc_id=parseInt(did);
       data['doctor']=doctor_name;
+      data['doc_id']=doc_id;
       console.log(data);
       Axios.post('http://localhost:3001/deleteBooking',data).then((resp)=>{
 

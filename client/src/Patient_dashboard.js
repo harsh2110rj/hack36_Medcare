@@ -71,11 +71,14 @@ function Patient_dashboard(){
     useEffect(() => {
         const token = localStorage.getItem('token');
         const user=localStorage.getItem('user');
+        const id=localStorage.getItem('id');
+        let pid=parseInt(id);
         console.log(user);
+        console.log('id:'+id);
                 setEmail(user);
                 Axios.post('http://localhost:3001/user/patient',{email:user}).then((resp)=>{
                     setId(localStorage.getItem("id"));
-                    //console.log(resp.data[0].name);
+                    // console.log(resp.data);
                     setName(resp.data[0].name);
                   //  console.log("id in pat dash",localStorage.getItem("id"));
                     })

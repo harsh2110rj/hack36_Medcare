@@ -26,11 +26,21 @@ function Book() {
     const [array6,setArray6] = useState([])
     const [array7,setArray7] = useState([])
     const [array8,setArray8] = useState([])
+    const [id1,setId1] = useState([])
+    const [id2,setId2] = useState([])
+    const [id3,setId3] = useState([])
+    const [id4,setId4] = useState([])
+    const [id5,setId5] = useState([])
+    const [id6,setId6] = useState([])
+    const [id7,setId7] = useState([])
+    const [id8,setId8] = useState([])
+    
     function Handle1(msg){
         const data={category:msg};
         // console.log(data);
         Axios.post('http://localhost:3001/show/doctor/category',data).then((resp)=>{
-            setArray1(resp.data);
+           
+            setArray1(resp.data)
         })
         return 0;
     }
@@ -38,14 +48,17 @@ function Book() {
         const data={category:msg};
         // console.log(data);
         Axios.post('http://localhost:3001/show/doctor/category',data).then((resp)=>{
+            console.log(resp.data);
+        
             setArray2(resp.data);
-        })
+    })
         return 0;
     }
     function Handle3(msg){
         const data={category:msg};
         // console.log(data);
         Axios.post('http://localhost:3001/show/doctor/category',data).then((resp)=>{
+            console.log(resp.data);
             setArray3(resp.data);
         })
         return 0;
@@ -70,6 +83,7 @@ function Book() {
         const data={category:msg};
         // console.log(data);
         Axios.post('http://localhost:3001/show/doctor/category',data).then((resp)=>{
+            console.log(resp.data);
             setArray6(resp.data);
         })
         return 0;
@@ -78,7 +92,10 @@ function Book() {
         const data={category:msg};
         // console.log(data);
         Axios.post('http://localhost:3001/show/doctor/category',data).then((resp)=>{
+            console.log(resp.data);
+          
             setArray7(resp.data);
+           
         })
         return 0;
     }
@@ -107,8 +124,8 @@ function Book() {
         <div id="example-collapse-text1">
             
             {
-            array1.map((item,i)=>(
-                <h6 key={i}><Button><Appointment doctor={item}/></Button></h6>
+            array1.map((item,i)=>( 
+                <h6 key={i}><Button><Appointment doctor={item.name} id={item.id} /></Button></h6>
 
                 )
             )
@@ -128,7 +145,7 @@ function Book() {
         <div id="example-collapse-text2">
             {
             array2.map((item,i)=>(
-                <h6 key={i}><Button><Appointment doctor={item}/></Button></h6>
+                <h6 key={i}><Button><Appointment doctor={item.name} id={item.id} /></Button></h6>
                 )
             )
             }
@@ -146,7 +163,7 @@ function Book() {
         <div id="example-collapse-text3">
             {
             array3.map((item,i)=>(
-                <h6 key={i}><Button><Appointment doctor={item}/></Button></h6>
+                <h6 key={i}><Button><Appointment doctor={item.name} id={item.id} /></Button></h6>
                 )
             )
             }
@@ -164,7 +181,7 @@ function Book() {
         <div id="example-collapse-text4">
             {
             array4.map((item,i)=>(
-                <h6 key={i}><Button><Appointment doctor={item}/></Button></h6>
+                <h6 key={i}><Button><Appointment doctor={item.name} id={item.id} /></Button></h6>
                 )
             )
             }
@@ -182,7 +199,7 @@ function Book() {
         <div id="example-collapse-text5">
             {
             array5.map((item,i)=>(
-                <h6 key={i}><Button><Appointment doctor={item}/></Button></h6>
+                <h6 key={i}><Button><Appointment doctor={item.name} id={item.id} /></Button></h6>
                 )
             )
             }
@@ -200,7 +217,7 @@ function Book() {
         <div id="example-collapse-text6">
             {
             array6.map((item,i)=>(
-                <h6 key={i}><Button><Appointment doctor={item}/></Button></h6>
+                <h6 key={i}><Button><Appointment doctor={item.name} id={item.id} /></Button></h6>
                 )
             )
             }
@@ -218,7 +235,7 @@ function Book() {
         <div id="example-collapse-text7">
             {
             array7.map((item,i)=>(
-                <h6 key={i}><Button><Appointment doctor={item}/></Button></h6>
+                <h6 key={i}><Button><Appointment doctor={item.name} id={item.id} /></Button></h6>
                 )
             )
             }
@@ -236,7 +253,7 @@ function Book() {
         <div id="example-collapse-text8">
             {
             array8.map((item,i)=>(
-                <h6 key={i}><Button><Appointment doctor={item}/></Button></h6>
+                <h6 key={i}><Button><Appointment doctor={item.name} id={item.id} /></Button></h6>
                 )
             )
             }

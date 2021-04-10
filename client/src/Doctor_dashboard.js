@@ -18,7 +18,7 @@ import { Button, Card } from 'react-bootstrap';
 
 function TabPanel(props) {
     const { children, value, index, ...other } = props;
-
+// console.log(localStorage.getItem('id'));
     return (
         <div
             role="tabpanel"

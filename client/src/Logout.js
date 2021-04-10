@@ -11,7 +11,7 @@ function Logout(){
         localStorage.removeItem('type');
         localStorage.removeItem('user');
         localStorage.removeItem('id');
-        localStorage.removeItem('type');
+        // localStorage.removeItem('type');
         history.push('/');
     },[]);
     return(
