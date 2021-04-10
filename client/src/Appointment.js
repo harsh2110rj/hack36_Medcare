@@ -4,7 +4,68 @@ import Axios from 'axios'
 import Popup from './Popup'
 import {useHistory} from 'react-router-dom'
 import './pop.css'
+
+//payment
+function loadScript(src) {
+  return new Promise((resolve) => {
+    const script = document.createElement('script')
+    script.src = src
+    script.onload = () => {
+      resolve(true)
+    }
+    script.onerror = () => {
+      resolve(false)
+    }
+    document.body.appendChild(script)
+  })
+}
+
+const __DEV__ = document.domain === 'localhost'
+//payment
+
 function Appointment(props) {
+
+  // payment
+  const [nameRazor, setNameRazor] = useState("Adam");
+
+  async function displayRazorpay() {
+    const res = await loadScript('https://checkout.razorpay.com/v1/checkout.js')
+
+    if (!res) {
+      alert('Razorpay SDK failed to load. Are you online?')
+      return
+    }
+
+    const data = await fetch('http://localhost:3001/razorpay', { method: 'POST' }).then((t) =>
+      t.json()
+    )
+
+    console.log(data)
+
+    const options = {
+      key: __DEV__ ? "rzp_test_ajDpqGNzQ4hAml" : 'PRODUCTION_KEY',
+      currency: data.currency,
+      amount: data.amount.toString(),
+      order_id: data.id,
+      name: 'Donation',
+      description: 'Thank you for nothing. Please give us some money',
+      image: 'http://localhost:3001/logo.svg',
+      handler: function (response) {
+        alert("Payment session ends. Wait for email notification!")
+        modalClose();
+      },
+      prefill: {
+        name: "Adam",
+        email: 'test@gmail.com',
+        phone_number: '9899999999'
+      }
+    }
+    const paymentObject = new window.Razorpay(options)
+    paymentObject.open()
+  }
+//payment
+
+
 const history=useHistory();
   const [patient_name,setPatient_name]=useState("");
   
@@ -53,6 +114,7 @@ const history=useHistory();
     if(!email || !mobile || !reason || slot==="Choose" || book_Date==="Choose")
     {alert('Fill all the details CORRECTLY..')}
     else{
+      displayRazorpay();
 
        let data={
          patient:patient_name, email:email , reason:reason , slot:slot, date:book_Date, mobile:mobile , doctor:props.doctor
@@ -65,8 +127,7 @@ setEmail("");
 setReason("");
 setSlot("Choose");
 setMobile("");
-      modalClose();
-    alert('Wait for email confirmation')
+      
     }
     // history.push('/patient/book');
     

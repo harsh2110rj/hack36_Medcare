@@ -9,6 +9,9 @@ const port = 3001;
 const jwt = require("jsonwebtoken");
 const session = require("express-session");
 const cookieParser = require("cookie-parser");
+const Razorpay = require('razorpay')
+const shortid = require('shortid')
+
 
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.json());
@@ -339,9 +342,7 @@ io.on("connection",(socket)=>{
 });
 
 
-
-
-
+//forum code starts
 
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cors());
@@ -392,6 +393,70 @@ app.get("/api/get", (req, res) => {
         // console.log(result);
     })
 })
+//forum code ends
+
+//payment code starts
+app.use(cors())
+app.use(bodyParser.json())
+
+const razorpay = new Razorpay({
+    key_id: "rzp_test_ajDpqGNzQ4hAml",
+    key_secret: "aNLAATtF4gt7xw4fJkygTVgv"
+})
+
+app.get('/logo.svg', (req, res) => {
+    res.sendFile(path.join(__dirname, 'logo.svg'))
+})
+
+app.post('/verification', (req, res) => {
+    // do a validation
+    const secret = '12345678'
+
+    console.log(req.body)
+
+    const crypto = require('crypto')
+
+    const shasum = crypto.createHmac('sha256', secret)
+    shasum.update(JSON.stringify(req.body))
+    const digest = shasum.digest('hex')
+
+    console.log(digest, req.headers['x-razorpay-signature'])
+
+    if (digest === req.headers['x-razorpay-signature']) {
+        console.log('request is legit')
+        // process it
+        require('fs').writeFileSync('payment1.json', JSON.stringify(req.body, null, 4))
+    } else {
+        // pass it
+    }
+    res.json({ status: 'ok' })
+})
+
+app.post('/razorpay', async (req, res) => {
+    const payment_capture = 1
+    const amount = 499
+    const currency = 'INR'
+
+    const options = {
+        amount: amount * 100,
+        currency,
+        receipt: shortid.generate(),
+        payment_capture
+    }
+
+    try {
+        const response = await razorpay.orders.create(options)
+        console.log(response)
+        res.json({
+            id: response.id,
+            currency: response.currency,
+            amount: response.amount
+        })
+    } catch (error) {
+        console.log(error)
+    }
+})
+//payment code ends
 
 server.listen(port, () => {
     console.log('Server running...');
