@@ -27,7 +27,7 @@ const db = mysql.createPool({
     host: 'localhost',
     user: 'root',
     password: '',
-    database: 'user',
+    database: 'forum',
 });
 
 
@@ -69,6 +69,26 @@ app.post('/user/patient', (req, res) => {
     const email = req.body.email;
 
     const sqlSelect = "SELECT * FROM patient_details WHERE email=?;"
+    db.query(sqlSelect, email, (err, result) => {
+
+        res.send(result);
+    })
+})
+
+//dashboard_patient
+app.post('/user/patient/pending', (req, res) => {
+    const email = req.body.email;
+
+    const sqlSelect = "SELECT * FROM appointment_details WHERE email=?;"
+    db.query(sqlSelect, email, (err, result) => {
+
+        res.send(result);
+    })
+})
+app.post('/user/patient/confirmed', (req, res) => {
+    const email = req.body.email;
+    console.log("inside confirmed email is : "+email);
+    const sqlSelect = "SELECT * FROM confirmed_appointment WHERE email=?;"
     db.query(sqlSelect, email, (err, result) => {
 
         res.send(result);

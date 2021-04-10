@@ -1,6 +1,9 @@
 import React,{useState,useEffect} from 'react'
 import {Link} from 'react-router-dom'
 import Nav_patient from './Nav_patient'
+import { Button, Card } from 'react-bootstrap';
+import doctor_image from './doctor_image.jpg'
+import patient_image from './patient_image.jpg'
 import Axios from 'axios'
 import PropTypes from 'prop-types';
 import { makeStyles } from '@material-ui/core/styles';
@@ -13,7 +16,7 @@ import VideoCall from './VideoCall';
 import { ContextProvider } from './Context';
 import Pat_upcoming from './components/Pat_upcoming';
 import Pat_past from './components/Pat_past';
-
+import patient_img from './patient_1.webp'
 
 function TabPanel(props) {
     const { children, value, index, ...other } = props;
@@ -68,9 +71,12 @@ function Patient_dashboard(){
     };
 
 
+    const [pending,setPending]=useState(0);
+    const [confirmed,setConfirmed]=useState(0);
     useEffect(() => {
         const token = localStorage.getItem('token');
         const user=localStorage.getItem('user');
+        
         console.log(user);
                 setEmail(user);
                 Axios.post('http://localhost:3001/user/patient',{email:user}).then((resp)=>{
@@ -79,9 +85,17 @@ function Patient_dashboard(){
                     setName(resp.data[0].name);
                   //  console.log("id in pat dash",localStorage.getItem("id"));
                     })
-                                   
+     Axios.post('http://localhost:3001/user/patient/pending',{patient_id:id}).then((response)=>{
+          setPending(response?.data?.length)  
+          
+     })
+        Axios.post('http://localhost:3001/user/patient/confirmed', { patient_id: id }).then((response) => {
+            setConfirmed(response?.data?.length)
+            
+        })
     },[]);
     return(
+        <>
         <div> 
             <h1>hello</h1>
             <Nav_patient  name={name}/>
@@ -94,7 +108,31 @@ function Patient_dashboard(){
                 </Tabs>
             </AppBar>
             <TabPanel value={value} index={0}>
-                Profile
+                    Profile
+                 <div style={{ 'display': 'flex', 'margin': '50px' }}>
+                        <Card style={{ width: '25rem', 'margin': "auto", backgroundColor: "#FFDEAD" }}>
+                            <Card.Body>
+                                <Card.Img variant="top" src={patient_img} />
+                                <br /><br />
+
+                            </Card.Body>
+                        </Card>
+                        <Card style={{ width: '35rem', height: '25rem', 'margin': "auto", backgroundColor: "#FFFACD" }}>
+                            <Card.Body>
+                                <Card.Title><h1 style={{ fontSize: "40px", fontFamily: "Times New Roman" }}>Profile</h1></Card.Title>
+                                <br /><br />
+                                <Card.Text>
+                                    <p style={{ fontSize:"20px",fontFamily: "Times New Roman", }}> Name: {name}</p>
+                                    <p style={{ fontSize:"20px",fontFamily: "Times New Roman", }}> Email: {email}</p>
+                                    <p style={{ fontSize:"20px",fontFamily: "Times New Roman", }}> Pending Appointments: {pending}</p>
+                                    <p style={{ fontSize:"20px",fontFamily: "Times New Roman", }}> Confirmed Appointments: {confirmed}</p>
+
+                                </Card.Text>
+
+                            </Card.Body>
+                        </Card>
+
+                    </div>
 </TabPanel>
             <TabPanel value={value} index={1}>
                <Pat_upcoming id={id} />
@@ -109,6 +147,8 @@ function Patient_dashboard(){
 </TabPanel>
             
     </div>
+           
+</>
     )
 }
 export default Patient_dashboard;
