@@ -133,7 +133,7 @@ app.post('/login/patient', (req, res) => {
                     // console.log(password==result[0].password);
                     if (response) {
 
-                        const id = result[0].id;
+                        const id = result[0].pid;
                         const token = jwt.sign({ id }, "mykey", {
                             expiresIn: 60 * 60 * 24
                         })
@@ -311,6 +311,12 @@ app.post('/confirmedBooking',(req,res)=>{
     })
 })
 
+app.post('/appointmentList',(req,res)=>{
+    const query = "SELECT * from appointment_details WHERE pat_id=?";
+    db.query(query, [req.body.id], (err, result) => {
+        res.send(result);
+    })
+})
 
 
 

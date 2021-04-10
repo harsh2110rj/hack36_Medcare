@@ -12,6 +12,7 @@ import Box from '@material-ui/core/Box';
 import VideoCall from './VideoCall';
 import { ContextProvider } from './Context';
 import Pat_upcoming from './components/Pat_upcoming';
+import Pat_past from './components/Pat_past';
 
 
 function TabPanel(props) {
@@ -74,8 +75,9 @@ function Patient_dashboard(){
                 setEmail(user);
                 Axios.post('http://localhost:3001/user/patient',{email:user}).then((resp)=>{
                     setId(localStorage.getItem("id"));
-                    console.log(resp.data[0].name);
+                    //console.log(resp.data[0].name);
                     setName(resp.data[0].name);
+                  //  console.log("id in pat dash",localStorage.getItem("id"));
                     })
                                    
     },[]);
@@ -98,7 +100,7 @@ function Patient_dashboard(){
                <Pat_upcoming id={id} />
 </TabPanel>
             <TabPanel value={value} index={2}>
-                Past
+                <Pat_past id={id} />
 </TabPanel>
             <TabPanel value={value} index={3}>
             <ContextProvider>

@@ -39,7 +39,7 @@ const Pat_upcoming = (props) => {
                     <TableHead>
                         <TableRow>
 
-                            <TableCell align="center">Patient</TableCell>
+                            <TableCell align="center">Doctor</TableCell>
                             <TableCell align="center">Time</TableCell>
                             <TableCell align="center">Date</TableCell>
                             <TableCell align="center">Status</TableCell>
@@ -51,12 +51,12 @@ const Pat_upcoming = (props) => {
                     <TableBody>
                         {patients.map((row) => (
                             <TableRow key={row.ID}>
-                                <TableCell align="center">{row.patient}</TableCell>
+                                <TableCell align="center">{row.doctor}</TableCell>
                                 <TableCell align="center">{row.slot}</TableCell>
                                 <TableCell align="center">{row.date}</TableCell>
                                 <TableCell align="center">{row.status}</TableCell>
                                 <TableCell align="center">{row.mobile}</TableCell>
-                                <TableCell align="center">Link Part</TableCell>
+                                <TableCell align="center">{row.Link}</TableCell>
 
                             </TableRow>
                         ))}
