@@ -77,20 +77,18 @@ console.log(email);
 
 //dashboard_patient
 app.post('/user/patient/pending', (req, res) => {
-    const email = req.body.email;
+    const patient_id = req.body.patient_id;
 
-    const sqlSelect = "SELECT * FROM appointment_details WHERE email=?;"
-    db.query(sqlSelect, email, (err, result) => {
-
+    const sqlSelect = "SELECT * FROM appointment_details WHERE pat_id=?;"
+    db.query(sqlSelect, patient_id, (err, result) => {
         res.send(result);
     })
 })
 app.post('/user/patient/confirmed', (req, res) => {
-    const email = req.body.email;
-    console.log("inside confirmed email is : "+email);
-    const sqlSelect = "SELECT * FROM confirmed_appointment WHERE email=?;"
-    db.query(sqlSelect, email, (err, result) => {
-
+    const patient_id = req.body.patient_id;
+    console.log("inside confirmed patient_id is : "+patient_id);
+    const sqlSelect = "SELECT * FROM confirmed_appointment WHERE pat_id=?;"
+    db.query(sqlSelect, patient_id, (err, result) => {
         res.send(result);
     })
 })
