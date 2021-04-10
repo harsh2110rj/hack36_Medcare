@@ -317,6 +317,49 @@ const email=req.body.email;
       // Preview URL: https://ethereal.email/message/WaQKMgKddxQDoou...
 })
 
+app.post('/cancel',(req,res)=>{
+    const email=req.body.email;
+        const output=` 
+        <p> Your appointment with ${req.body.doctor} on ${req.body.date} at ${req.body.slot} has been cancelled. Sorry for the incovenience:</p>
+        Your fees will be refunded within 48 hours
+        `;
+        let transporter = nodemailer.createTransport({
+            host: "smtp.gmail.com",
+            port: 587,
+            secure: false, // true for 465, false for other ports
+            auth: {
+              user: "healthmedcare0@gmail.com" , // generated ethereal user
+              pass: "medcare@123", // generated ethereal password
+            },
+            tls:{
+                rejectUnauthorized: false
+            }
+          });
+        
+          // send mail with defined transport object
+          let info={
+            from: '"MedCare" <healthmedcare0@gmail.com>', // sender address
+            to: email, // list of receivers
+            subject: "Appointment Cancelled", // Subject line
+            text: "Hello world?", // plain text body
+            html: output, // html body
+          };
+          transporter.sendMail(info, function (error, response) {
+            if (error) {
+                console.log(error);
+            }
+            else {
+                console.log("mail sent");
+            }
+        });
+          console.log("Message sent: %s", info.messageId);
+          // Message sent: <b658f8ca-6296-ccf4-8306-87d57a0b4321@example.com>
+        
+          // Preview only available when sending through an Ethereal account
+          console.log("Preview URL: %s", nodemailer.getTestMessageUrl(info));
+          // Preview URL: https://ethereal.email/message/WaQKMgKddxQDoou...
+    })
+
 app.post('/confirmedBooking',(req,res)=>{
     const doctor=req.body.doctor;
     const patient=req.body.patient;
