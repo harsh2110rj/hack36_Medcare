@@ -22,6 +22,7 @@ function Home(){
             <Link to='/login_patient'><button className="auth-inner" onClick={Handle2}>
             <h2>Patient</h2>
             </button></Link>
+            
     </div>
     )
 }

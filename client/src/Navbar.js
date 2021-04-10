@@ -8,6 +8,7 @@ function Navbar()
             <nav className="navbar navbar-expand-lg navbar-light fixed-top">
         <div className="container">
           <Link className="navbar-brand" to='/'>Home</Link>
+            <Link className="navbar-brand" to="/ShowForum">Show Forum</Link>
           <div className="collapse navbar-collapse" id="navbarTogglerDemo02">
             {/* <ul className="navbar-nav ml-auto">
               <li className="nav-item">
