@@ -99,6 +99,7 @@ app.post('/user/doctor/pending', (req, res) => {
 
     const sqlSelect = "SELECT * FROM appointment_details WHERE doc_id=?;"
     db.query(sqlSelect, doctor_id, (err, result) => {
+        console.log(doctor_id+'......');
         res.send(result);
     })
 })

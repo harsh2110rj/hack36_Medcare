@@ -37,12 +37,12 @@ function Login_doctor() {
             let data1 = { email: email, password: password };
 console.log(data1);
                 Axios.post('http://localhost:3001/login/doctor', data1).then((resp) => {
-                    // console.log(resp.data);
+                    console.log(resp.data);
                     if (!resp.data.auth)
                         {setLoginStatus(false);  alert('Invalid details');}
                     else
                     {
-                        const id=resp.data.id;
+                        const id=resp?.data?.result?.id;
                        console.log(id);
                         setLoginStatus(true);
                         localStorage.setItem("type","doctor");

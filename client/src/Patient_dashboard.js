@@ -127,7 +127,7 @@ function Patient_dashboard(){
                                 <Card.Text>
                                     <p style={{ fontSize:"20px",fontFamily: "Times New Roman", }}> Name: {name}</p>
                                     <p style={{ fontSize:"20px",fontFamily: "Times New Roman", }}> Email: {email}</p>
-                                    <p style={{ fontSize:"20px",fontFamily: "Times New Roman", }}> Pending Appointments: {pending-confirmed}</p>
+                                    <p style={{ fontSize:"20px",fontFamily: "Times New Roman", }}> Pending Appointments: {pending}</p>
                                     <p style={{ fontSize:"20px",fontFamily: "Times New Roman", }}> Confirmed Appointments: {confirmed}</p>
 
                                 </Card.Text>
