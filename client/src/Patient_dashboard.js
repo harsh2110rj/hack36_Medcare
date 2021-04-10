@@ -85,7 +85,7 @@ function Patient_dashboard(){
                 Axios.post('http://localhost:3001/user/patient',{email:user}).then((resp)=>{
                     setId(localStorage.getItem("id"));
                     // console.log(resp.data);
-                    setName(resp.data[0].name);
+                    setName(resp?.data[0]?.name);
                   //  console.log("id in pat dash",localStorage.getItem("id"));
                     })
      Axios.post('http://localhost:3001/user/patient/pending',{patient_id:id}).then((response)=>{
@@ -127,7 +127,7 @@ function Patient_dashboard(){
                                 <Card.Text>
                                     <p style={{ fontSize:"20px",fontFamily: "Times New Roman", }}> Name: {name}</p>
                                     <p style={{ fontSize:"20px",fontFamily: "Times New Roman", }}> Email: {email}</p>
-                                    <p style={{ fontSize:"20px",fontFamily: "Times New Roman", }}> Pending Appointments: {pending}</p>
+                                    <p style={{ fontSize:"20px",fontFamily: "Times New Roman", }}> Pending Appointments: {pending-confirmed}</p>
                                     <p style={{ fontSize:"20px",fontFamily: "Times New Roman", }}> Confirmed Appointments: {confirmed}</p>
 
                                 </Card.Text>

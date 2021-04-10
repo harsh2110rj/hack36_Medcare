@@ -84,6 +84,7 @@ app.post('/user/patient/pending', (req, res) => {
         res.send(result);
     })
 })
+
 app.post('/user/patient/confirmed', (req, res) => {
     const patient_id = req.body.patient_id;
     console.log("inside confirmed patient_id is : "+patient_id);
@@ -92,6 +93,24 @@ app.post('/user/patient/confirmed', (req, res) => {
         res.send(result);
     })
 })
+//doctor dashboard
+app.post('/user/doctor/pending', (req, res) => {
+    const doctor_id = req.body.doctor_id;
+
+    const sqlSelect = "SELECT * FROM appointment_details WHERE doc_id=?;"
+    db.query(sqlSelect, doctor_id, (err, result) => {
+        res.send(result);
+    })
+})
+app.post('/user/doctor/confirmed', (req, res) => {
+    const doctor_id = req.body.doctor_id;
+
+    const sqlSelect = "SELECT * FROM confirmed_appointment WHERE doc_id=?;"
+    db.query(sqlSelect, doctor_id, (err, result) => {
+        res.send(result);
+    })
+})
+
 app.post('/show/doctor/category',(req,res)=>{
     const category=req.body.category;
     const sqlSelect = "SELECT name,id FROM doctor_details WHERE category=?;"

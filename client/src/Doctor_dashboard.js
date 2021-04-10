@@ -14,7 +14,7 @@ import Doc_past from './components/Doc_past';
 import VideoCall from './VideoCall';
 import { ContextProvider } from './Context';
 import { Button, Card } from 'react-bootstrap';
-
+import doctor_img from './doctor_img.jpg';
 
 function TabPanel(props) {
     const { children, value, index, ...other } = props;
@@ -63,7 +63,8 @@ function Doctor_dashboard() {
     const classes = useStyles();
     const [id,setId]=useState(0);
     const [value, setValue] = React.useState(0);
-
+    const [pending, setPending] = useState(0);
+    const [confirmed, setConfirmed] = useState(0);
     const handleChange = (event, newValue) => {
         setValue(newValue);
     };
@@ -78,8 +79,16 @@ function Doctor_dashboard() {
           //  console.log(resp.data);
             setId(localStorage.getItem("id"));
             console.log("id",id);
-            setName(resp.data[0].name);
+            setName(resp?.data[0]?.name);
             console.log("name",name);
+        })
+        Axios.post('http://localhost:3001/user/doctor/pending', { doctor_id: id }).then((response) => {
+            setPending(response?.data?.length)
+
+        })
+        Axios.post('http://localhost:3001/user/doctor/confirmed', { doctor_id: id }).then((response) => {
+            setConfirmed(response?.data?.length)
+
         })
 
     }, []);
@@ -98,6 +107,30 @@ function Doctor_dashboard() {
             </AppBar>
             <TabPanel value={value} index={0}>
                 Profile
+                 <div style={{ 'display': 'flex', 'margin': '50px' }}>
+                    <Card style={{ width: '25rem', 'margin': "auto", backgroundColor: "#FFDEAD" }}>
+                        <Card.Body>
+                            <Card.Img variant="top" src={doctor_img} />
+                            <br /><br />
+
+                        </Card.Body>
+                    </Card>
+                    <Card style={{ width: '35rem', height: '25rem', 'margin': "auto", backgroundColor: "#FFFACD" }}>
+                        <Card.Body>
+                            <Card.Title><h1 style={{ fontSize: "40px", fontFamily: "Times New Roman" }}>Profile</h1></Card.Title>
+                            <br /><br />
+                            <Card.Text>
+                                <p style={{ fontSize: "20px", fontFamily: "Times New Roman", }}> Name: {name}</p>
+                                <p style={{ fontSize: "20px", fontFamily: "Times New Roman", }}> Email: {email}</p>
+                                <p style={{ fontSize: "20px", fontFamily: "Times New Roman", }}> Pending Appointments: {pending-confirmed}</p>
+                                <p style={{ fontSize: "20px", fontFamily: "Times New Roman", }}> Confirmed Appointments: {confirmed}</p>
+
+                            </Card.Text>
+
+                        </Card.Body>
+                    </Card>
+
+                </div>
 </TabPanel>
             <TabPanel value={value} index={1}>
                <Doc_upcoming id={id}  />
