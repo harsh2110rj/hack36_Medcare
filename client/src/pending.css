@@ -1,0 +1,12 @@
+div.card{
+    margin:10px;
+    padding:10px;
+   
+
+}
+Button{
+    margin:5px;
+}
+div.card-header{
+    background-color: rgb(224, 213, 213);
+}

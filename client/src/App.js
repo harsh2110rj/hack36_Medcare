@@ -13,6 +13,11 @@ import Home from './Home'
 import ShowThread from './ShowThread';
 import { ShowThreadWithId } from './ShowForum';
 import ShowForum from './ShowForum'
+import Book from './Book'
+import Pending_Appointments from './Pending_Appointments'
+import VideoCall from './VideoCall'
+import { ContextProvider } from './Context';
+
 
 function App() {
 
@@ -30,6 +35,14 @@ function App() {
         <Route path="/logout"><Logout /></Route>
         <Route exact path="/ShowForum" component={ShowForum} />
         <Route exact path="/ShowThread" component={ShowThreadWithId} />
+        <Route path="/patient/book"><Book /></Route>
+        <Route path="/doctor/pending_appointments"><Pending_Appointments /></Route>
+        <Route path="/videoCall">
+          <ContextProvider>
+            <VideoCall />
+          </ContextProvider>
+        </Route>
+
       </Switch>
 
     </div>
