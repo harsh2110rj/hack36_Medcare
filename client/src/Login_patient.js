@@ -46,6 +46,9 @@ function Login_patient(){
                     {
                        
                         setLoginStatus(true);
+                        const id=resp.data.id;
+                       // console.log("id in login pat",id);
+                        localStorage.setItem("id",id);
                         localStorage.setItem("token",resp.data.token);
                         localStorage.setItem("user",email);
                         
