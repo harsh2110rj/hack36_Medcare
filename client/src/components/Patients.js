@@ -22,7 +22,7 @@ const Patients = () => {
     const [patients,setPatients]=useState([]);
 
     useEffect(() => {  
-        Axios.get('http://localhost:3001/patientList/',{
+        Axios.post('http://localhost:3001/confirmedList/',{
           id:localStorage.getItem("id")
         }).then((res)=>{
             setPatients(res.data);
@@ -33,10 +33,10 @@ const Patients = () => {
             if(e.target.value.length>=20)
             {
                 console.log("sending");
-            //  Axios.post('http://localhost:5000/updateLink/',{
-            //         id:id,
-            //         link:e.target.value
-            //  }).then()
+             Axios.post('http://localhost:3001/updateLink/',{
+                    id:id,
+                    link:e.target.value
+             }).then()
         }
         }
         const type=localStorage.getItem("type");
@@ -53,7 +53,7 @@ const Patients = () => {
             <TableCell align="center">Patient</TableCell>
             <TableCell align="center">Time</TableCell>
             <TableCell align="center">Date</TableCell>
-            <TableCell align="center">Status</TableCell>
+            <TableCell align="center">Mobile</TableCell>
             <TableCell align="center">Link</TableCell>
            
           </TableRow>
@@ -61,12 +61,12 @@ const Patients = () => {
         <TableBody>
           {patients.map((row) => (
             <TableRow key={row.ID}>
-              <TableCell align="center">{row.Name}</TableCell>
-              <TableCell align="center">{row.Time}</TableCell>
-              <TableCell align="center">{row.Date}</TableCell>
-              <TableCell align="center">{row.Status}</TableCell>
+              <TableCell align="center">{row.patient}</TableCell>
+              <TableCell align="center">{row.slot}</TableCell>
+              <TableCell align="center">{row.date}</TableCell>
+              <TableCell align="center">{row.mobile}</TableCell>
               <TableCell align="center">
-                  <input type="text" value={row.Link} onChange={(e)=>changeLink(e,row.ID,)} />
+                  <input type="text" onChange={(e)=>changeLink(e,row.id)} />
                   {/* <button onClick={()=>update(row.ID,row.Link)} >Update Link</button> */}
               </TableCell>
             </TableRow>
@@ -81,7 +81,7 @@ const Patients = () => {
           {
             return (
               <div>
-                
+
               </div>
           )
             }
